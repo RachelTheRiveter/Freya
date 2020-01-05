@@ -31,4 +31,29 @@ class TemplatesTest extends TestCase
 
     }
 
+    /** @test */
+
+    public function a_template_requires_a_title()
+    {
+
+        $attributes = factory('App\Template')->raw(['title' =>'']);
+        $this->post('/templates', $attributes)->assertSessionHasErrors('title');
+    }
+
+    /** @test */
+
+    public function a_template_requires_a_excerpt()
+    {
+        $attributes = factory('App\Template')->raw(['excerpt' =>'']);
+        $this->post('/templates', $attributes)->assertSessionHasErrors('excerpt');
+    }
+
+    /** @test */
+
+    public function a_template_requires_a_template()
+    {
+        $attributes = factory('App\Template')->raw(['template' =>'']);
+        $this->post('/templates', $attributes)->assertSessionHasErrors('template');
+    }
+
 }

@@ -19,9 +19,9 @@ class TemplatesController extends Controller
     public function store()
     {
         // validate
-
+        $attributes = request()->validate(['title' => 'required', 'excerpt'=>'required', 'template'=>'required']);
         // persist
-        Template::create(request(['title', 'excerpt', 'template']));
+        Template::create($attributes);
 
         // redirect
         return redirect('/templates');
