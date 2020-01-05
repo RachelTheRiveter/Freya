@@ -16,10 +16,20 @@ class TemplatesController extends Controller
 
     }
 
+    public function show(Template $template)
+    {
+
+        return view('templates.show', compact('template'));
+    }
+
     public function store()
     {
         // validate
-        $attributes = request()->validate(['title' => 'required', 'excerpt'=>'required', 'template'=>'required']);
+        $attributes = request()->validate([
+            'title' => 'required'
+            , 'excerpt'=>'required'
+            , 'template'=>'required'
+        ]);
         // persist
         Template::create($attributes);
 

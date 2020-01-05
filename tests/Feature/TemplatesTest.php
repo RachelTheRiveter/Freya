@@ -33,6 +33,19 @@ class TemplatesTest extends TestCase
 
     /** @test */
 
+    public function a_user_can_view_a_template()
+    {
+        $this->withoutExceptionHandling();
+
+        $template = factory('App\Template')->create();
+        $this->get($template->path())
+            ->assertSee($template->title)
+            ->assertSee($template->excerpt)
+            ->assertSee($template->template);
+    }
+
+    /** @test */
+
     public function a_template_requires_a_title()
     {
 

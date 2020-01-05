@@ -8,14 +8,8 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Freya</h1>
-    <ul>
-        @forelse ($templates as $template)
-            <li><a href="{{ $template->path()  }}">{{ $template->title }}</a></li>
-
-       @empty
-            <li>No Templates Yet!</li>
-        @endforelse
-    </ul>
+<h1>{{ $template->title }}</h1>
+<div> {{ $template->excerpt }} </div>
+<div>  {{ $template->template  }}</div>
 </body>
 </html>

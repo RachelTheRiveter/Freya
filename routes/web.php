@@ -17,5 +17,6 @@ Route::get('/', function () {
 
 Route::get('/templates', 'TemplatesController@index');
 
+Route::get('/templates/{template}', 'TemplatesController@show');
 
 Route::post('/templates', 'TemplatesController@store');
