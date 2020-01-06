@@ -17,6 +17,7 @@ Route::get('/', function () {
 
 Route::group(['middleware' => 'auth'], function() {
     Route::get('/templates', 'TemplatesController@index');
+    Route::get('/templates/create', 'TemplatesController@create');
     Route::get('/templates/{template}', 'TemplatesController@show');
     Route::post('/templates', 'TemplatesController@store');
 

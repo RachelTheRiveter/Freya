@@ -25,6 +25,11 @@ class TemplatesController extends Controller
         return view('templates.show', compact('template'));
     }
 
+    public function create()
+    {
+        return view('templates.create');
+    }
+
     public function store()
     {
         // validate

@@ -6,31 +6,21 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class TemplatesTest extends TestCase
+class ManageTemplatesTest extends TestCase
 {
     use WithFaker, RefreshDatabase;
 
     /** @test */
-    public function guests_cannot_create_templates()
-    {
-
-        $attributes = factory('App\Template')->raw();
-        $this->post('/templates', $attributes)->assertRedirect('login');
-    }
-
-    /** @test */
-    public function guests_cannot_view_templates()
-    {
-
-        $this->get('/templates')->assertRedirect('login');
-    }
-
-    /** @test */
-    public function guests_cannot_view_a_single_template()
+    public function guests_cannot_manage_templates()
     {
         $template = factory('App\Template')->create();
 
+        $this->get('/templates')->assertRedirect('login');
+        $this->get('/templates/create')->assertRedirect('login');
         $this->get($template->path())->assertRedirect('login');
+        $this->post('/templates', $template->toArray())->assertRedirect('login');
+
+
     }
 
     /** @test */
@@ -39,6 +29,9 @@ class TemplatesTest extends TestCase
     {
         $this->withoutExceptionHandling();
         $this->actingAs(factory('App\User')->create());
+
+        $this->get('/templates/create')->assertStatus(200);
+
         $attributes = [
             'title' => $this->faker->sentence
             , 'excerpt' => $this->faker->sentence
