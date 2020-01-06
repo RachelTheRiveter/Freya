@@ -10,5 +10,9 @@ $factory->define(Template::class, function (Faker $faker) {
         'title' => $faker->sentence
         , 'excerpt' => $faker->sentence
         , 'template' => $faker->paragraph
+        , 'owner_id' => function ()
+        {
+            return factory(App\User::class)->create()->id;
+        }
     ];
 });

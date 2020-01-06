@@ -19,4 +19,8 @@ Route::get('/templates', 'TemplatesController@index');
 
 Route::get('/templates/{template}', 'TemplatesController@show');
 
-Route::post('/templates', 'TemplatesController@store');
+Route::post('/templates', 'TemplatesController@store')->middleware('auth');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

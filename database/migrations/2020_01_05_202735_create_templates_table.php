@@ -15,10 +15,17 @@ class CreateTemplatesTable extends Migration
     {
         Schema::create('templates', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('owner_id');
             $table->string('title');
             $table->string('excerpt');
             $table->text('template');
             $table->timestamps();
+
+            $table
+                ->foreign('owner_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
         });
     }
 

@@ -30,8 +30,9 @@ class TemplatesController extends Controller
             , 'excerpt'=>'required'
             , 'template'=>'required'
         ]);
+        
         // persist
-        Template::create($attributes);
+        auth()->user()->templates()->create($attributes);
 
         // redirect
         return redirect('/templates');
