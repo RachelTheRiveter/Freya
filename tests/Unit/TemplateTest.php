@@ -17,4 +17,14 @@ class TemplateTest extends TestCase
 
         $this->assertEquals('/templates/' . $template->id, $template->path());
     }
+
+    /** @test */
+
+    public function it_belongs_to_an_owner()
+    {
+        $template = factory('App\Template')->create();
+
+        $this->assertInstanceOf('App\User', $template->owner);
+
+    }
 }

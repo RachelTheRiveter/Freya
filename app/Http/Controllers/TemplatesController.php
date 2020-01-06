@@ -10,7 +10,7 @@ class TemplatesController extends Controller
 {
     public function index()
     {
-        $templates = Template::all();
+        $templates = auth()->user()->templates;
 
         return view('templates.index', compact('templates'));
 
@@ -18,6 +18,9 @@ class TemplatesController extends Controller
 
     public function show(Template $template)
     {
+        if (auth()->user()->isNot($template->owner)) {
+            abort(403);
+        }
 
         return view('templates.show', compact('template'));
     }
@@ -30,7 +33,7 @@ class TemplatesController extends Controller
             , 'excerpt'=>'required'
             , 'template'=>'required'
         ]);
-        
+
         // persist
         auth()->user()->templates()->create($attributes);
 

@@ -12,4 +12,9 @@ class Template extends Model
     {
         return "/templates/{$this->id}";
     }
+
+    public function owner()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

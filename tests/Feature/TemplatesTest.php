@@ -11,12 +11,26 @@ class TemplatesTest extends TestCase
     use WithFaker, RefreshDatabase;
 
     /** @test */
-    public function only_authenticated_users_can_create_a_template()
+    public function guests_cannot_create_templates()
     {
-//        $this->withoutExceptionHandling();
 
         $attributes = factory('App\Template')->raw();
         $this->post('/templates', $attributes)->assertRedirect('login');
+    }
+
+    /** @test */
+    public function guests_cannot_view_templates()
+    {
+
+        $this->get('/templates')->assertRedirect('login');
+    }
+
+    /** @test */
+    public function guests_cannot_view_a_single_template()
+    {
+        $template = factory('App\Template')->create();
+
+        $this->get($template->path())->assertRedirect('login');
     }
 
     /** @test */
@@ -42,15 +56,31 @@ class TemplatesTest extends TestCase
 
     /** @test */
 
-    public function a_user_can_view_a_template()
+    public function a_user_can_view_their_template()
     {
+
+        $this->be(factory('App\User')->create());
         $this->withoutExceptionHandling();
 
-        $template = factory('App\Template')->create();
+        $template = factory('App\Template')
+            ->create(['owner_id' => auth()->id()]);
+
         $this->get($template->path())
             ->assertSee($template->title)
             ->assertSee($template->excerpt)
             ->assertSee($template->template);
+    }
+
+    /** @test */
+
+    public function an_authenticated_user_cannot_view_the_projects_of_others()
+    {
+        $this->be(factory('App\User')->create());
+
+        $template = factory('App\Template')->create();
+
+        $this->get($template->path())->assertStatus(403);
+
     }
 
     /** @test */

@@ -15,12 +15,17 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/templates', 'TemplatesController@index');
+Route::group(['middleware' => 'auth'], function() {
+    Route::get('/templates', 'TemplatesController@index');
+    Route::get('/templates/{template}', 'TemplatesController@show');
+    Route::post('/templates', 'TemplatesController@store');
 
-Route::get('/templates/{template}', 'TemplatesController@show');
+    Route::get('/home', 'HomeController@index')->name('home');
 
-Route::post('/templates', 'TemplatesController@store')->middleware('auth');
+});
+
+
+
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
